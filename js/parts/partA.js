@@ -1,8 +1,8 @@
 const HUD_HEIGHT = 80;
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
 const PRODUCTOS_GROUP_SIZE = 200;
-
-
+const PARTEA_PRODUCTO_VELOCITY = 200;
+const PARTEA_PRODUCTO_PROBABILITY = 0.02;
 
 
 let background;
@@ -12,6 +12,8 @@ let letters;
 let carrito;
 
 
+let currentProductoProbability;
+let currentProductoVelocity;
 
 let partAState = {
     preload: preloadPartAState,
@@ -30,7 +32,7 @@ function preloadPartAState () {
         'assets/imgs/fruta.png');
 
     game.load.image('botella',
-        'assets/imgs/ufo.png');
+        'assets/imgs/botella.png');
 
     game.load.image('brick',
         'assets/imgs/brick.png');
@@ -46,6 +48,7 @@ function createPartAState () {
         0, 0, w, h, 'background');
 
     createCarrito();
+    createProductos(PRODUCTOS_GROUP_SIZE);
     createHUD();
 
     letters = game.add.group();
@@ -79,18 +82,48 @@ function createCarrito() {
 
 function createProductos(number) {
     productos = game.add.group();
+    productos.scale.setTo(0.1);
     productos.enableBody = true;
-    productos.createMultiple(number, 'ufo');
+    let copianumber = number;
+    //productos.createMultiple(number/4, 'fruta');
+    
+    productos.createMultiple(number/4, 'verdura');
+    
+    productos.createMultiple(number/4, 'botella');
+    copianumber = copianumber - 3*(number/4);
+
+    productos.createMultiple(copianumber, 'brick');
+
     productos.callAll('events.onOutOfBounds.add',
         'events.onOutOfBounds', resetMember);
     productos.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
     productos.setAll('checkWorldBounds', true);
-    currentProductoProbability = 0.2;
-    currentProductoVelocity = 50;
+    currentProductoProbability = PARTEA_PRODUCTO_PROBABILITY;
+    currentProductoVelocity = PARTEA_PRODUCTO_VELOCITY;
     game.time.events.loop(
         TIMER_RHYTHM, activateProducto, this);
-    currentProductoProbability =
-        LEVEL_PRODUCTO_PROBABILITY[level-1];
-    currentProductoVelocity =
-        LEVEL_PRODUCTO_VELOCITY[level-1];
+    //currentProductoProbability =
+    //    LEVEL_PRODUCTO_PROBABILITY[level-1];
+    //currentProductoVelocity =
+    //    LEVEL_PRODUCTO_VELOCITY[level-1];
+}
+
+function activateProducto() {
+    if (Math.random() < currentProductoProbability) {
+        let producto = productos.getFirstExists(false);
+        if (producto) {
+            let gw = game.world.width;
+            let uw = producto.body.width;
+            let w = gw - uw;
+            let x = Math.floor(Math.random()*w);
+            let z = uw / 2 + x;
+            producto.reset(z, 0);
+            producto.body.velocity.x = 0;
+            producto.body.velocity.y = currentProductoVelocity;
+        }
+    }
+}
+
+function resetMember(item) {
+    item.kill();
 }
