@@ -8,7 +8,7 @@ function preloadAboutState () {
 };
 
 function createAboutState () {
-    game.add.image(0, 0, 'bg');
+    game.add.image(0, 0, 'backAbout');
 
     game.add.text(TITLE_X, TITLE_Y, textTitle, styleTitle);
 };
