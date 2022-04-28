@@ -1,5 +1,6 @@
 const HUD_HEIGHT = 80;
-
+const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
+const PRODUCTOS_GROUP_SIZE = 200;
 
 
 
@@ -16,9 +17,22 @@ let partAState = {
 
 function preloadPartAState () {
     game.load.image('background',
-    'assets/imgs/supermercado.jpg');
+        'assets/imgs/supermercado.jpg');
+
     game.load.image('carrito',
-    'assets/imgs/carrito.png');
+        'assets/imgs/carrito.png');
+
+    game.load.image('fruta',
+        'assets/imgs/fruta.png');
+
+    game.load.image('botella',
+        'assets/imgs/ufo.png');
+
+    game.load.image('brick',
+        'assets/imgs/brick.png');
+
+    game.load.image('verdura',
+        'assets/imgs/verdura.png');
 };
 
 function createPartAState () {
@@ -48,3 +62,20 @@ function createCarrito() {
     game.physics.arcade.enable(carrito);
     //carrito.body.collideWorldBounds = true;
 }
+
+function createProductos(number) {
+    productos = game.add.group();
+    productos.enableBody = true;
+    productos.createMultiple(number, 'ufo');
+    productos.callAll('events.onOutOfBounds.add',
+        'events.onOutOfBounds', resetMember);
+    productos.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+    productos.setAll('checkWorldBounds', true);
+    currentProductoProbability = 0.2;
+    currentProductoVelocity = 50;
+    game.time.events.loop(
+        TIMER_RHYTHM, activateProducto, this);
+    currentProductoProbability =
+        LEVEL_PRODUCTO_PROBABILITY[level-1];
+    currentProductoVelocity =
+        LEVEL_PRODUCTO_VELOCITY[level-1];
