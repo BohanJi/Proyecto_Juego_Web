@@ -6,7 +6,11 @@ const PRODUCTOS_GROUP_SIZE = 200;
 
 
 let background;
+
+let letters;
+
 let carrito;
+
 
 
 let partAState = {
@@ -44,12 +48,22 @@ function createPartAState () {
     createCarrito();
     createHUD();
 
+    letters = game.add.group();
+    letters.inputEnableChildren = true;
+    game.input.keyboard.onDownCallback = getKeyboardInput;
+
 };
 
 function updatePartAState () {
-    
     background.tilePosition.y += 1;
-    
+};
+
+
+function getKeyboardInput(e) {
+    if (e.keyCode >= Phaser.Keyboard.A && e.keyCode <= Phaser.Keyboard.Z) {
+        let a = game.add.text(Math.random() * game.width, Math.random() * game.height, e.key, {fontSize: '40px', fill: '#FA2'}, letters); // group to add to
+        a.anchor.setTo(0.5, 0.5);
+    }
 };
 
 
