@@ -18,5 +18,7 @@ function createPartAState () {
 };
 
 function updatePartAState () {
-
+    
+    background.tilePosition.y += 1;
+    
 };
