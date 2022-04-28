@@ -40,3 +40,32 @@ function updatePlay() {
     manageCraftShots();
     
 } */
+
+let activeWord = null;
+let productos
+
+function getKeyboardInput(e) {
+    if (e.keyCode >= Phaser.Keyboard.A
+    && e.keyCode <= Phaser.Keyboard.Z
+    && activeWord == null) {
+        for(let i=0;i<productos.length;i++){
+            if(e.keyCode==productos[i][0]){
+                activeWord = productos[i];
+                eliminateLetter();
+                break;
+            }
+        }
+    }
+    else {
+        eliminateLetter()
+    }
+}
+
+function eliminateLetter() {
+    if (activeWord.length=1){
+        activeWord = null
+    }
+    else {
+        activeWord.splice(0,1);
+    }
+}
