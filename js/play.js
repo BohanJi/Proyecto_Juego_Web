@@ -52,6 +52,7 @@ function getKeyboardInput(e) {
             if(e.keyCode==productos[i][0]){
                 activeWord = productos[i];
                 eliminateLetter();
+                carritoRender();
                 break;
             }
         }
@@ -68,4 +69,11 @@ function eliminateLetter() {
     else {
         activeWord.splice(0,1);
     }
+}
+
+function carritoRender(){
+    let x = abs(carrito.x + activeWord.x);
+    let y = abs(carrito.y + activeWord.y);
+    let angle = Math.atan2(y,x);
+    carrito.setAngle(angle);
 }

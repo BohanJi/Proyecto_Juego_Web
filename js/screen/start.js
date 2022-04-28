@@ -35,13 +35,25 @@ function createStartState () {
 function AddButtonMenu () {
     buttonAbout = game.add.button(BUTTON_X, BUTTON_ABOUT_Y, 'button_about', StartAbout, this, 2,1,0);
     buttonA = game.add.button(BUTTON_X, BUTTON_PART_A_Y, 'button_part-a',
-        function() { game.state.start('part-a') });
+        OnButtonAPressed);
     buttonB = game.add.button(BUTTON_X, BUTTON_PART_B_Y, 'button_part-b',
-        function() { game.state.start('part-b') });
+        OnButtonBPressed);
     buttonC = game.add.button(BUTTON_X, BUTTON_PART_C_Y, 'button_part-c',
-        function() { game.state.start('part-c') });
+        OnButtonCPressed);
 };
 
 function StartAbout () {
     game.state.start('about');
+}
+
+function OnButtonAPressed() {
+    game.state.start('part-a');
+}
+
+function OnButtonBPressed() {
+    game.state.start('part-b');
+}
+
+function OnButtonCPressed() {
+    game.state.start('part-c');
 }
