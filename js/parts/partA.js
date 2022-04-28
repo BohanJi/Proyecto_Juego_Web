@@ -15,6 +15,8 @@ function createPartAState () {
     let h = game.world.height;
     background = game.add.tileSprite(
         0, 0, w, h, 'background');
+
+    createHUD();
 };
 
 function updatePartAState () {
