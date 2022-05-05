@@ -2,7 +2,7 @@ const HUD_HEIGHT = 80;
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
 const PRODUCTOS_GROUP_SIZE = 200;
 const PARTEA_PRODUCTO_VELOCITY = 200;
-const PARTEA_PRODUCTO_PROBABILITY = 0.02;
+const PARTEA_PRODUCTO_PROBABILITY = 0.2;
 
 
 let background;
@@ -13,7 +13,6 @@ let carrito;
 
 
 let currentProductoProbability;
-let currentProductoVelocity;
 
 let partAState = {
     preload: preloadPartAState,
@@ -99,7 +98,6 @@ function createProductos(number) {
     productos.callAll('anchor.setTo', 'anchor',0.5,1.0);
     productos.setAll('checkWorldBounds', true);
     currentProductoProbability = PARTEA_PRODUCTO_PROBABILITY;
-    currentProductoVelocity = PARTEA_PRODUCTO_VELOCITY;
     game.time.events.loop(
         TIMER_RHYTHM, activateProducto, this);
     //currentProductoProbability =
@@ -118,8 +116,7 @@ function activateProducto() {
             let x = Math.floor(Math.random()*w);
             let z = uw / 2 + x;
             producto.reset(z*10, 0);
-            producto.body.velocity.x = 0;
-            producto.body.velocity.y = currentProductoVelocity;
+            moveProduct(producto,PARTEA_PRODUCTO_VELOCITY)
         }
     }
 }
