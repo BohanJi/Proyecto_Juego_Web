@@ -96,7 +96,7 @@ function createProductos(number) {
 
     productos.callAll('events.onOutOfBounds.add',
         'events.onOutOfBounds', resetMember);
-    productos.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+    productos.callAll('anchor.setTo', 'anchor',0.5,1.0);
     productos.setAll('checkWorldBounds', true);
     currentProductoProbability = PARTEA_PRODUCTO_PROBABILITY;
     currentProductoVelocity = PARTEA_PRODUCTO_VELOCITY;
@@ -117,7 +117,7 @@ function activateProducto() {
             let w = gw - uw;
             let x = Math.floor(Math.random()*w);
             let z = uw / 2 + x;
-            producto.reset(z, 0);
+            producto.reset(z*10, 0);
             producto.body.velocity.x = 0;
             producto.body.velocity.y = currentProductoVelocity;
         }

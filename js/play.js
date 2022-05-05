@@ -75,5 +75,17 @@ function carritoRender(){
     let x = abs(carrito.x + activeWord.x);
     let y = abs(carrito.y + activeWord.y);
     let angle = Math.atan2(y,x);
+    if (angle > 10){
+        angle = 10;
+    }
+    else if(angle < -10){
+        angle = -10;
+    }
     carrito.setAngle(angle);
+}
+
+function moveProduct(){
+    for (let i = 0; i < productos.length; i++){
+        PARTEA_PRODUCTO_VELOCITY
+    }
 }
