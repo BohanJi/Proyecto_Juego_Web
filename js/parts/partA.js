@@ -11,6 +11,26 @@ let letters;
 
 let carrito;
 
+let words = ["Garlic",
+"Artichoke",
+"Artichoke",
+"Yam",
+"Eggplant",
+"Broccoli",
+"Zucchini",
+"Onion",
+"Red onion",
+"Green onions",
+"Mushroom",
+"Cauliflower",
+"Asparagus",
+"Spinach",
+"Lettuce",
+"Corn",
+"Avocat",
+"Potato",
+"Sweet potato",
+"Cucumber"];
 
 let currentProductoProbability;
 
@@ -58,6 +78,7 @@ function createPartAState () {
 
 function updatePartAState () {
     background.tilePosition.y += 1;
+    
 };
 
 
@@ -87,9 +108,9 @@ function createProductos(number) {
 
     productos.createMultiple(number/4, 'verdura');
 
-    productos.createMultiple(number/4, 'botella');
+    //productos.createMultiple(number/4, 'botella');
 
-    productos.createMultiple(number/4, 'brick');
+    //productos.createMultiple(number/4, 'brick');
 
     productos.callAll('events.onOutOfBounds.add',
         'events.onOutOfBounds', resetMember);
@@ -114,7 +135,8 @@ function activateProducto() {
             let x = Math.floor(Math.random()*w);
             let z = uw / 2 + x;
             producto.reset(z*10, 0);
-            moveProduct(producto,PARTEA_PRODUCTO_VELOCITY)
+            moveProduct(producto,PARTEA_PRODUCTO_VELOCITY);
+            let t = game.add.text(x,w,words[3],{fontSize: '40px', fill: '#FA2'},letters);
         }
     }
 }
