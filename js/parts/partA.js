@@ -84,9 +84,9 @@ function createProductos(number) {
     productos.scale.setTo(0.1);
     productos.enableBody = true;
     //productos.createMultiple(number/4, 'fruta');
-    
+
     productos.createMultiple(number/4, 'verdura');
-    
+
     productos.createMultiple(number/4, 'botella');
 
     productos.createMultiple(number/4, 'brick');
