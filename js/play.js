@@ -86,9 +86,11 @@ function carritoRender(){
 
 function moveProduct(producto,velocity){
     //direccion
-    //game.moveToObject(producto,carrito,100,10000);
-    producto.body.velocity.y = velocity;
 
-    producto.body.velocity.x = (carrito.x - producto.x) / 76;
+    //game.moveToObject(producto,carrito,100,10000);
+    //producto.body.velocity.y = velocity;
+
+    //producto.body.velocity.x = (carrito.x - producto.x) / 76;
+    game.physics.arcade.moveToObject(producto,carrito, velocity);
 }
 
