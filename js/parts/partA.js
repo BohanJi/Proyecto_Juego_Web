@@ -83,16 +83,16 @@ function createProductos(number) {
     productos = game.add.group();
     productos.scale.setTo(0.1);
     productos.enableBody = true;
-    //productos.createMultiple(number/4, 'fruta');
+    /*productos.createMultiple(number/4, 'fruta');
 
     productos.createMultiple(number/4, 'verdura');
 
     productos.createMultiple(number/4, 'botella');
 
-    productos.createMultiple(number/4, 'brick');
-
+    productos.createMultiple(number/4, 'brick');*/
+    productos.createMultiple(number/4, ['fruta', 'brick', 'verdura', 'botella'])
     productos.callAll('events.onOutOfBounds.add',
-        'events.onOutOfBounds', resetMember);
+'events.onOutOfBounds', resetMember);
     productos.callAll('anchor.setTo', 'anchor',0.5,1.0);
     productos.setAll('checkWorldBounds', true);
     currentProductoProbability = PARTEA_PRODUCTO_PROBABILITY;
@@ -108,6 +108,7 @@ function activateProducto() {
     if (Math.random() < currentProductoProbability) {
         let producto = productos.getFirstExists(false);
         if (producto) {
+            game.physics.arcade.enable(producto);
             let gw = game.world.width;
             let uw = producto.body.width;
             let w = gw - uw;
