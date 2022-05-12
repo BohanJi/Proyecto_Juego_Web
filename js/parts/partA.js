@@ -83,15 +83,13 @@ function createProductos(number) {
     productos = game.add.group();
     productos.scale.setTo(0.1);
     productos.enableBody = true;
-    let copianumber = number;
     //productos.createMultiple(number/4, 'fruta');
     
     productos.createMultiple(number/4, 'verdura');
     
     productos.createMultiple(number/4, 'botella');
-    copianumber = copianumber - 3*(number/4);
 
-    productos.createMultiple(copianumber, 'brick');
+    productos.createMultiple(number/4, 'brick');
 
     productos.callAll('events.onOutOfBounds.add',
         'events.onOutOfBounds', resetMember);

@@ -86,10 +86,6 @@ function carritoRender(){
 
 function moveProduct(producto,velocity){
     //direccion
-    let x = carrito.x - producto.x;
-    if(x>0){
-        x*=10;
-    }
-    producto.body.velocity.x = parseInt(x/100);
-    producto.body.velocity.y = velocity;
+    game.moveToObject(producto,carrito);
 }
+
