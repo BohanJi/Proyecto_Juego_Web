@@ -3,7 +3,7 @@ const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
 const PRODUCTOS_GROUP_SIZE = 200;
 const PARTEA_PRODUCTO_VELOCITY = 200;
 const PARTEA_PRODUCTO_PROBABILITY = 0.2;
-
+const maxWorldCount = 5;
 
 let background;
 
@@ -11,28 +11,64 @@ let letters;
 
 let carrito;
 
-let words = ["Garlic",
-"Artichoke",
-"Artichoke",
-"Yam",
-"Eggplant",
-"Broccoli",
-"Zucchini",
-"Onion",
-"Red onion",
-"Green onions",
-"Mushroom",
-"Cauliflower",
-"Asparagus",
-"Spinach",
-"Lettuce",
-"Corn",
-"Avocat",
-"Potato",
-"Sweet potato",
-"Cucumber"];
+let tiempo = 0;
+
+
+
+let fruitList = 
+["orange",
+"apple",
+"banana",
+"kiwi",
+"watermelon",
+"cherries"];
+
+let vegetablesList = 
+["garlic",
+"artichoke",
+"eggplant",
+"broccoli",
+"zucchini",
+"onion",
+"red onion",
+"green onion",
+"mushroom",
+"cauliflower",
+"asparagus",
+"spinach",
+"lettuce",
+"corn",
+"avocado",
+"potato",
+"sweet potato",
+"cucumber"];
+
+let brickList = 
+["milk",
+"apple juice",
+"soy milk",
+"orange juice",
+"peach juice",
+"almond milk"];
+
+let bottleList = 
+["water",
+"soda",
+"beer",
+"oil",
+"ketchup",
+"mustard",
+"liquor",
+"hot sauce",	
+"vinegar",
+"whisky",
+"vodka",
+"gin",
+"tomato sauce"];
 
 let currentProductoProbability;
+
+
 
 let partAState = {
     preload: preloadPartAState,
@@ -67,28 +103,29 @@ function createPartAState () {
         0, 0, w, h, 'background');
 
     createCarrito();
-    createProductos(PRODUCTOS_GROUP_SIZE);
+    productos = new OWP('fruta',carrito,game,PRODUCTOS_GROUP_SIZE);
     createHUD();
 
-    letters = game.add.group();
+    /*letters = game.add.group();
     letters.inputEnableChildren = true;
-    game.input.keyboard.onDownCallback = getKeyboardInput;
+    game.input.keyboard.onDownCallback = getKeyboardInput;*/
 
 };
 
 function updatePartAState () {
     background.tilePosition.y += 1;
-    
+    tiempo+=1;
+    createWords();
 };
 
-
+/*
 function getKeyboardInput(e) {
     if (e.keyCode >= Phaser.Keyboard.A && e.keyCode <= Phaser.Keyboard.Z) {
         let a = game.add.text(Math.random() * game.width, Math.random() * game.height, e.key, {fontSize: '40px', fill: '#FA2'}, letters); // group to add to
         a.anchor.setTo(0.5, 0.5);
     }
 };
-
+*/
 
 function createCarrito() {
     let x = game.world.centerX;
@@ -100,7 +137,7 @@ function createCarrito() {
     //carrito.body.collideWorldBounds = true;
 }
 
-function createProductos(number) {
+/*function createProductos(number) {
     productos = game.add.group();
     productos.scale.setTo(0.1);
     productos.enableBody = true;
@@ -135,12 +172,43 @@ function activateProducto() {
             let x = Math.floor(Math.random()*w);
             let z = uw / 2 + x;
             producto.reset(z*10, 0);
-            moveProduct(producto,PARTEA_PRODUCTO_VELOCITY);
-            let t = game.add.text(x,w,words[3],{fontSize: '40px', fill: '#FA2'},letters);
+           //moveProduct(producto,PARTEA_PRODUCTO_VELOCITY);
+           game.physics.arcade.moveToObject(producto,carrito,200);
+            //let t = game.add.text(x,w,words[3],{fontSize: '40px', fill: '#FA2'},letters);
         }
     }
-}
-
+}*/
 function resetMember(item) {
     item.kill();
+}
+
+
+
+//let letters;
+
+let totalWords = [fruitList, vegetablesList, brickList, bottleList];
+
+
+
+function randomWord(list)
+{
+    Math.random(0, list.length);
+}
+
+
+
+letters = game.add.group();
+letters.inputEnableChildren = true;
+
+function createWords() {
+    if (tiempo %= 5)
+    {
+        let a = game.add.text(Math.random() * game.width,
+            Math.random() * game.height, totalWords[randomWord(0,totalWords.length)],
+            {fontSize: '40px', fill: '#FA2'},
+            letters); // group to add to
+        // relative positions in [0,1]
+        a.anchor.setTo(0.5, 0.5); // 0.5 for the center
+        console.log(totalWords[randomWord(0,totalWords.length)]);
+    }
 }
